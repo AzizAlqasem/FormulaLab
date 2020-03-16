@@ -1,0 +1,2 @@
+# FormulaLab
+FormulaLab is a formula search engine for mathmatical equations (math, physics, chemistry, ...). It searches through formulas database and fiend the desired variable(as a function of other variable(s)) either directly of indirectly. The indirect search is by going through analytical subtitutions to connect two variables and form a new formula that is not in the database. FormulaLab provide a convienant envieronment to store, find and use multiple formulas in your code.
