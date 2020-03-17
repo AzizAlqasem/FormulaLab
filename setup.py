@@ -1,11 +1,13 @@
 import setuptools
+from FormulaLab import __version__
+
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="FormulaLab", 
-    version="0.0.3.2",
+    version=__version__,
     author="Abdulaziz Alqasem",
     author_email="Aziz_Alqasem@hotmail.com",
     description="Mathmatical Formulas Database Search Engine",

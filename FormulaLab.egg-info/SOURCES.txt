@@ -1,8 +1,8 @@
 README.md
 setup.py
-FormulaLab/FormulaLab.py
 FormulaLab/__init__.py
 FormulaLab/ftools.py
+FormulaLab/search.py
 FormulaLab.egg-info/PKG-INFO
 FormulaLab.egg-info/SOURCES.txt
 FormulaLab.egg-info/dependency_links.txt

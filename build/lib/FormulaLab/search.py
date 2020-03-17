@@ -5,7 +5,7 @@ from functools import lru_cache
 import pandas as pd
 
 #Local Import
-import ftools
+from FormulaLab import ftools
 
 __version__ = '0.3.0.'
 
@@ -124,8 +124,8 @@ class FormulaSearch:
 
         """
         if function:
-            fo = self.get(func, vars, id, function=False)
-            return self.function(func=fo, id=id)
+            fo = self.get(func, vars=vars, id=id, function=False)
+            return self.function(func=fo)
         
         if id:
             return self._get_fo(id=id, var=func)
