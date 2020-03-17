@@ -1,0 +1,26 @@
+
+____ Future Releases ____
+  
+  __ FormulaLab 0.0.4 __
+	- Add Test
+	- Update Tutorials
+	- Update and restructure DataBase
+	- Add Documentation:
+	    - How to write formulas
+	    - How to update the database
+
+
+____ Releases ____
+
+  __ FormulaLab 0.0.3 __
+
+	- This first public release!
+	- The Main feature is FormulaLab.search.FormulaSearch which include:
+		1- get() : Direct search
+		2- find(): Search through mathmatical substitutions
+		3- function: Converts sympy symbols to python function.
+
+	- First release of FormulaLab.ftools, which is mainly supporting FormulaLab.search.
+	- First release of Documentation which only has a tutorial.ipnb
+	- First release of Formula DataBase, that has only 'Formula DataBase.csv' for testing.
+	
