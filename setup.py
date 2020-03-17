@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="FormulaLab", 
-    version="0.0.3",
+    version="0.0.3.1",
     author="Abdulaziz Alqasem",
     author_email="Aziz_Alqasem@hotmail.com",
     description="Mathmatical Formulas Database Search Engine",
