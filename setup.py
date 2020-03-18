@@ -10,7 +10,7 @@ setuptools.setup(
     version=__version__,
     author="Abdulaziz Alqasem",
     author_email="Aziz_Alqasem@hotmail.com",
-    description="Mathmatical Formulas Database Search Engine",
+    description="Search Engine of Mathmatical Formulas Database",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/AzizAlqasem/FormulaLab",

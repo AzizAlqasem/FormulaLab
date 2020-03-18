@@ -1,18 +1,41 @@
 
 ____ Future Releases ____
   
-  __ FormulaLab 0.0.4 __
+ __ FormulaLab 0.0.5 __
+	- New Features:
+	    - Database:
+		- Add found formula to a database for future use.
+		  The temporary database is not saved unless it is set to do so. The option should
+ 		  be set to True/False when initiating the class. This should speed the calculation,
+		  and save important results.
+		- If the user want to use only a small portion of the database for his code using (get), 
+		  then, there should be a way to save that portion of database in
+		- Translate from full variable names to acronyms database.
+		- Add a formula to a database:
+		  - Check if the formula already exist.
+		  - Pick a unique ID
+		  - Sort the database by field?
+		  - Combine multiple database, and make sure there is no conflict in formulas ID. 
+	- Speed improvement:
+	    - Graph:
+		- When a graph is created for specific data. Then, the user filter the data, the graph
+		  should not be retaken, but altered, such that the filtered data are not present. Now,			If the user remove the filter, the graph should be recovered without creating it again. 
+		- Initialization:
+		- Creat the args col if there is non, (save it to the database?)
+ 
+
+__ FormulaLab 0.0.4 __
 	- Add Test
-	- Update Tutorials
-	- Update and restructure DataBase
+	- Update Tutorials	- Update and restructure DataBase
 	- Add Documentation:
 	    - How to write formulas
 	    - How to update the database
+	- Separate Creating Finger_print in a separate function
 
 
-____ Releases ____
+____ Released ____
 
-  __ FormulaLab 0.0.3 __
+  __ FormulaLab 0.0.3 __  Mar. 16, 2020
 
 	- This first public release!
 	- The Main feature is FormulaLab.search.FormulaSearch which include:
