@@ -24,6 +24,24 @@ class FormulaSearch:
     """
 
     def __init__(self, data, formula_col = 'Formula', id_col = 'ID'):
+        """
+        
+
+        Parameters
+        ----------
+        data : Pandas.DataFrame, list, dict, set, tuple
+            Your formula database. 
+        formula_col : str, optional
+            If the input data is a DataFrame, then the column name must match 
+            formula_col. The default is 'Formula'.
+        id_col : TYPE, optional
+            The ID column of the database must match the id_col. The default is 'ID'.
+
+        Returns
+        -------
+        None.
+
+        """
         self.formula_col = formula_col
         self.id_col = id_col
         if type(data) != pd.DataFrame:
@@ -49,7 +67,7 @@ class FormulaSearch:
      
     
     @lru_cache(maxsize=64, typed=False) 
-    def find(self, func:str, var:str, shortest_path = True) -> list:
+    def find(self, func:str, var:str, shortest_path = True) -> list: #The name should be derive instead!
         """
         Search for the func and var, and connects them algabrically. 
 
@@ -194,8 +212,12 @@ class FormulaSearch:
             list of list of exprestions of sympy symbols.
 
         """
-        L = sp.sympify(expr.split('=')[0])
-        R = sp.sympify(expr.split('=')[1])
+        if '=' in expr:
+            L = sp.sympify(expr.split('=')[0])
+            R = sp.sympify(expr.split('=')[1])
+        else:
+            L = sp.sympify(expr)
+            R = 0
         function = sp.solve(sp.Eq(L, R), sp.var(var))
         return function
     
@@ -453,10 +475,18 @@ class FormulaSearch:
         
     
     def _dict_to_DataFrame(self, data_dict): #when the input data is not a DataFrame
-        assert self.formula_col in data_dict, 'The formula column name must be "{}"'.format(self.formula_col)
-        if self.id_col not in data_dict:
-            data_dict[self.id_col] =  list(range(1,len(data_dict[self.formula_col])+1))
-        self.data = pd.DataFrame(data_dict)
+        if self.formula_col not in data_dict:
+            if str(list(data_dict.keys())[0]).isdigit():    # if the user input: {1:'f=m*a', 2:'v=a*t',}
+                self.data = {}
+                self.data[self.id_col] = list(data_dict.keys())
+                self.data[self.formula_col] = list(data_dict.values())
+                self.data = pd.DataFrame(self.data)
+            else:
+                raise(Exception('The formula column name must be "{}"'.format(self.formula_col)))
+        else:
+            if self.id_col not in data_dict:
+                data_dict[self.id_col] =  list(range(1,len(data_dict[self.formula_col])+1))
+            self.data = pd.DataFrame(data_dict)
         #Sort column oreder for convienant
         self.data = self.data[[self.id_col, self.formula_col]]
         
