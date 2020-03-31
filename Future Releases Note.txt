@@ -1,12 +1,3 @@
-____ Dreams! ____
-	
-	- Making an artificial neural network nods as formulas with some sort of connections
-	  that map the physics formulas connection! With such network, you can predict what variables are
-	  changing when you feed the network with input and output! Also you can replace the database by 
-	  the neural network, so you provide the input, and you ask for the output! 
-
-
-
 ____ Future Releases ____
   
  __ FormulaLab 0.0.5 __

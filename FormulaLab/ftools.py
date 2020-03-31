@@ -2,28 +2,58 @@
 """
 Tools for formulas
 """
-
+import re
 from functools import lru_cache
 
 
-__version__ = '0.3.0.'
 
-@lru_cache(maxsize=1064, typed=False)
-def filter_arg(arg:str):
-    if not arg or arg.isdigit() or arg.startswith('.') or arg.endswith('_'):
-        return None
-    else:
-        return True
+
+def filter_args(formula:str):
+    """
+    Filter math functions such as sin,cos ... and constants 
+    that ends with "_" , such as speed_of_light_ 
+
+    Parameters
+    ----------
+    formula : str
+        DESCRIPTION.
+
+    Returns
+    -------
+    list
+        DESCRIPTION.
+
+    """
+    math_functions = re.findall(r'(\w+)\s*\(', formula)
+    args = re.findall('[a-zA-z]\w*', formula)
+    return list(set(filter(lambda i: i not in math_functions and not i.endswith('_'), args)))
+
+def get_integral_and_diff_info(formula:str) -> list:
+    """
+    def: operator(argument, action var)  , eg., diff(x**2/2, x)
     
-    
-def filter_args(foo: list):
-    new_foo = []
-    for arg in foo:
-        if not filter_arg(arg):
-            continue
-        else:
-            new_foo.append(arg)
-    return new_foo
+    Take a formula that has integral(s) or derivative(s) or both ((based on 
+    Sympy syntax)), and goves:
+        1- the operator: diff, integral
+        2- formula inside the operator (argument)
+        3- the variable where the operator is based upon  (action var)
+    formula = 'sin(x) + diff((a-2/u**2),z) - integrate(e*r,r**2)' 
+     out  ---> [('diff', '(a-2/u**2)', 'z'), ('integrate', 'e*r)', 'r**2')]
+
+    Parameters
+    ----------
+    formula : str
+        DESCRIPTION.
+
+    Returns
+    -------
+    list of tuples of three items, or empty list
+        [(operator, argument, action var), ...].
+        
+    """
+    formula = formula.replace(' ','')
+    reg_expr = r'(diff|integrate)\(([\(\)\w+\-*/]*),([\w+\-*/]+)'
+    return re.findall(reg_expr, formula)
 
 
 @lru_cache(maxsize=32, typed=False)
@@ -86,9 +116,9 @@ def loop_index(lis:list):
     return finl
 
 
-def fing_print(path:list, conc_var:list) -> list:
+def expand(path:list, conc_var:list) -> list:
     """
-    fing_print( path=[1, 2, 3], conc_var=[['a', 'c'], ['b', 'c']] ) 
+    expand( path=[1, 2, 3], conc_var=[['a', 'c'], ['b', 'c']] ) 
                     ---> [[1, 'a', 2, 'c', 3], [1, 'b', 2, 'c', 3]]
     gives the detailed path!
     Parameters
@@ -121,8 +151,28 @@ def fing_print(path:list, conc_var:list) -> list:
 
 #___________________________ NOTE __________________
 """
+list(re.finditer(r'sin|cos|[\(\),]', 'a*(sin(x)+2)/cos(e)'))
+___
+def ff():
+    cl = {'integrate':[],'diff':[], '(':[], ')':[], ',':[]}
+    s = 'a*(sin(x)+2)'
+    for i in cl:
+        r = r0 = 0
+        n=0
+        while r != -1 and n<9:
+            r = s[r+1:].find(i)
+            print(r)
+            if r != -1:
+                r += r0 + 1
+                cl[i].append(r)
+                r0 = r
+            n+=1
+            
+re.findall('\w\([\(\)\w\s+*/]*,', 'diff((a/u**2),z) - (b +e*r/3)*(o)')
 
+re.findall('(diff|integrate)\(([\(\)\w\s+\-*/]*),', 'sin(x)+diff((a-2/u**2),z) - integrate(b +e*r/3)*(o),r)/2')
 
+re.findall('(diff|integrate)\s*\(([\(\)\w\s+\-*/]*),([\w\s+\-*/]+)', 'sin(x) + diff  ((a-2/u**2),z) - integrate(e*r),r**2)')
 """
 
 

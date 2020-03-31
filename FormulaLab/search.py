@@ -7,23 +7,23 @@ import pandas as pd
 #Local Import
 from FormulaLab import ftools
 
-__version__ = '0.3.0.'
+
 
 class FormulaSearch:
     """
-    Formula is a search engine for Formulas database. It can go through equations 
+    Formula is a search engine of Formulas database. It can go through equations 
     to find connections between two differernt variables.
     
     The database should be DataFrame, list, tuple, set, or dict.
     
     The main functionalty of Formula:
-        1- get (function)   --->  To get direct search for formulas
-        2- find (function (variable))   --->  To Find all possible functions(variable)
-        3- function convert desiered formula to a python function
-     use 
+        1- find (function)   --->  To direct search for formulas
+        2- derive (function (variable))   --->  To derive all possible functions(variable)
+        3- function (expr) ---> convert a formula symbolic expr to a python function
+      
     """
 
-    def __init__(self, data, formula_col = 'Formula', id_col = 'ID'):
+    def __init__(self, data, formula_col = 'Formula', id_col = 'ID', save_all_derived_formulas=True):
         """
         
 
@@ -36,6 +36,8 @@ class FormulaSearch:
             formula_col. The default is 'Formula'.
         id_col : TYPE, optional
             The ID column of the database must match the id_col. The default is 'ID'.
+        save_all_derived_formulas: bool
+            All derieved formulas are temporarily stored in self.all_derived_formulas
 
         Returns
         -------
@@ -64,10 +66,14 @@ class FormulaSearch:
         
         # Generate Graph
         self.graph = self._generate_graph()
+        
+        # All derived formulas stored temporary here:
+        self.save_all_derived_formulas = save_all_derived_formulas
+        self.all_derived_formulas = set([])
      
     
     @lru_cache(maxsize=64, typed=False) 
-    def find(self, func:str, var:str, shortest_path = True) -> list: #The name should be derive instead!
+    def derive(self, func:str, var:str, shortest_path = True) -> list: #Name changed from find to derive 
         """
         Search for the func and var, and connects them algabrically. 
 
@@ -84,39 +90,36 @@ class FormulaSearch:
             All desired sol.
 
         """
+        assert func != var, 'Function and variable cannot be the same!' # derive(func,func) has an interesting resul!
         self.solutions = []
-        fids = self.get_formula_ids(func) 
+        self.traces = []  # trace shows the detailed path; eg, [1,'a', 2, 'v', 3, 'b', 4] 
+        fids = self.get_formula_ids(func)
         vids = self.get_formula_ids(var) 
-        all_fing_prints = []  # finger_print shows the detailed path; eg, [1,'a', 2, 'v', 3, 'b', 4] 
-        # Find All path
-        for fid in fids:
-            for vid in vids:
-                all_path = self._find_all_paths(fid,vid)  # gives all possible paths from func to var
-                if shortest_path: #Speed calculations but not comprehansive solutions!
-                    all_path = [self._get_shortest_path(all_path)]
-                for path in all_path:   # eg., path = [1,2,3,4]
-                    if len(path) == 1: # for the case when the func and the var at the same formula; eg, path =[1]
-                        self.solutions.append(self._solve_path( path, func, var)) #solve_path goes through the path and find the solutions
-                        continue
-                    con_var = self._get_all_connected_var(path)  #con_var is the variable that connect two formulas; eg, [['a'],['v'],['b','c']]
-                    con_var_ex = ftools.loop_index(con_var)  # This gives all different compinations; eg, [['a','v','b'], ['a','v','c']], 
-                    all_fing_prints.extend(ftools.fing_print(path, con_var_ex))  
-                    #This compines path with con_var_ex; ex., [[1,'a', 2, 'v', 3, 'b', 4],[1,'a', 2, 'v', 3, 'c', 4]]
-                        
-        if not all_fing_prints:
+        #* I should make sure here that fids and vids are all different, otherwise use direct search
+        for path in self._find_all_paths(fids, vids, shortest_path=shortest_path):  # eg., path = [1,2,3,4]
+            if len(path) == 1: #* for the case when the func and the var at the same formula; eg, path =[1]
+                self.solutions.append(self._solve_trace( path, func, var)) 
+                continue
+            self.traces.extend(self.trace(path))
+                                
+        if not self.traces:
             return self.solutions
-        all_fixed_path = self._fix_all_path(all_fing_prints, func, var)
-        # Usually paths (somehow) are repetitive, so they slow evrything down, this fix it (to some degree)
-        for p in all_fixed_path:
-            sol = self._solve_path(p, func, var)
+        self.traces = self._fix_all_traces(self.traces, func, var)
+        # Usually traces (somehow) are repetitive, so they slow evrything down, this fix it (to some degree)
+        for t in self.traces:
+            sol = self._solve_trace(t, func, var)
             if sol not in self.solutions:    
                 #Unfortunatlly, even after fixing paths, you still get different paths that has the same solutions!
                 self.solutions.append(sol)
+        
+        if self.save_all_derived_formulas:
+            self.all_derived_formulas.update(self.solutions) 
+            # The saved derived formulas should be included to the search for speed improvment!
         return self.solutions
         
     
 #    @lru_cache(maxsize=64, typed=False) Does not work!
-    def get(self, func:str, vars:list = None, id:int = None, function=False) -> list:
+    def find(self, func:str, vars:list = None, id:int = None, function=False) -> list: #This function name is changed from get to find
         """
         Direct search for formula and variables. If id is specified, then the search is 
         limited to one formula with id = "id"
@@ -141,25 +144,27 @@ class FormulaSearch:
         * or a python function, at function=True
 
         """
+        if vars:
+            if type(vars) == str:
+                vars = [vars]
+            assert func not in vars, 'Function and variable(s) must be different!'
+            
         if function:
-            fo = self.get(func, vars=vars, id=id, function=False)
+            fo = self.find(func, vars=vars, id=id, function=False)
             return self.function(func=fo)
-        
         if id:
             return self._get_fo(id=id, var=func)
         elif vars: # When the asks for function(vars)
-            if type(vars) == str:
-                vars = [vars]
-            all_var = tuple(list(vars)+[func]) # It must be a tuple because get_formula_ids uses memory cach
+            all_var = tuple(list(vars) + [func]) # It must be a tuple because get_formula_ids uses memory cach
             fo_ids = self.get_formula_ids(all_var, id_col = self.id_col)
         else:
             fo_ids = self.get_formula_ids(func, id_col = self.id_col)
-        return [self._get_fo(id=fo_id, var=func) for fo_id in fo_ids]
+        return [i for fo_id in fo_ids for i in self._get_fo(id=fo_id, var=func)]
        
         
     def function(self, func:sp.symbols):
         """
-        Similar to get(function=True) ... return a python function
+        Similar to find(function=True) ... return a python function
         """
         while type(func) == list:
             func = func[0]
@@ -167,9 +172,9 @@ class FormulaSearch:
       
         
     @lru_cache(maxsize=128, typed=False)
-    def get_raw_formula(self, id):
+    def find_raw_formula(self, id): #Name changed from get_... to find_...
         """
-        Find formula based of its id.
+        Find formula based on its id.
 
         Parameters
         ----------
@@ -218,8 +223,33 @@ class FormulaSearch:
         else:
             L = sp.sympify(expr)
             R = 0
-        function = sp.solve(sp.Eq(L, R), sp.var(var))
+        function = sp.solve(L-R, sp.Symbol(var))
         return function
+    
+    
+    def trace(self, path:list)->list:
+        """
+        Trace shows how to get from a function to a variable.
+        eg., [1, 'a', 2, 'b', 3], where [1,2,3] is the path, and ['a','b'] 
+        is the connected variable list.
+
+        Parameters
+        ----------
+        path : list
+            path [1,2,3, ...].
+
+        Returns
+        -------
+        list
+            path and connected variables.
+
+        """
+        con_var = self._get_all_connected_var(path)  #con_var is the variable that connect two formulas; eg, [['a'],['v'],['b','c']]
+        con_var_ex = ftools.loop_index(con_var)  # This gives all different compinations; eg, [['a','v','b'], ['a','v','c']], 
+        return ftools.expand(path, con_var_ex)
+        #This compines path with con_var_ex; ex., [[1,'a', 2, 'v', 3, 'b', 4],[1,'a', 2, 'v', 3, 'c', 4]]
+
+    
     
     @lru_cache(maxsize=128, typed=False)
     def get_formula_ids(self, var:tuple, id_col = 'ID')->list:
@@ -256,7 +286,7 @@ class FormulaSearch:
         Generate a dict with keys represent each formula. and values represent each connection with other formulass.
         eg; {1: [2], 2: [1, 3], 3: [2]}
         """
-        if not args_col in self.data:
+        if not args_col in self.data: # I think this should be in __init__ function
             self.data[args_col] = self._get_all_args()
     
         arg_set = {i for l in self.data[args_col] for i in l}
@@ -273,9 +303,9 @@ class FormulaSearch:
         return graph
     
     
-    def _find_all_paths(self, start:int, end:int, path:list=None):
+    def _find_paths(self, start:int, end:int, path:list=None):
         """
-        gives the path (id) that takes you from the starting formula to the end.
+        gives the paths (id) that takes you from the starting formula to the end.
         Parameters
         ----------
         graph : Dict
@@ -303,12 +333,45 @@ class FormulaSearch:
         paths = []
         for node in self.graph[start]:
             if node not in path:
-                newpaths = self._find_all_paths(node, end, path)
-                for newpath in newpaths:
+                newpaths = self._find_paths(node, end, path)
+                # It might be a good idea to try to find the shortest path of newpaths! 
+                for newpath in newpaths:    # paths.update(newpaths) is more readable!
                     paths.append(newpath)
         return paths
 
      
+    def _find_all_paths(self, fids:list, vids:list, shortest_path=True):
+        """
+        Finds all possible paths from a list of formula ides and variable ids. 
+        Shortest path select only the smallest length of a path out of paths that
+        has the same starting id and ending id.
+
+        Parameters
+        ----------
+        fids : list
+            list of formula ides (int).
+        vids : list
+            list of variables ids (int) .
+        shortest_path : TYPE, optional
+            Select the shortest path. The default is True.
+
+        Yields
+        ------
+        all_paths : iterable 
+            list of paths
+            
+        """
+        # Find All path
+        for fid in fids:
+            for vid in vids:
+                paths = self._find_paths(fid,vid)  # gives all possible paths from func to var
+                
+                if shortest_path: #Speed calculations but not comprehansive solutions!
+                    paths = self._get_shortest_path(paths)
+                
+                for path in paths:
+                    yield path
+                
         
 #    @lru_cache(maxsize=64, typed=False)
     def _get_fo(self, id:int, var:str):
@@ -327,18 +390,18 @@ class FormulaSearch:
             list of the solutions that are in sympy symbols.
     
         """
-        fo = self.get_raw_formula(id)
+        fo = self.find_raw_formula(id)
         return self.solve_for(expr = fo, var = var)
 
 
 
-    def _solve_path(self, path:list, fun:str, var:str): # Very Expensive algorithem!
+    def _solve_trace(self, trace:list, fun:str, var:str): # Very Expensive algorithem!
         """
-        Takes the path and does the algebra to find fun(var)
+        Takes the trace and does the algebra to find fun(var)
     
         Parameters
         ----------
-        path : list
+        trace : list
         fun : str
         var : str
     
@@ -348,15 +411,14 @@ class FormulaSearch:
             Desired Expresion as sympy symbols.
     
         """    
-    
-        formula = self._get_fo(path[0], var = fun).pop() # *Not Comprehansive
+        formula = self._get_fo(trace[0], var = fun).pop() # *Not Comprehansive
         
-        if len(path) == 1:
+        if len(trace) == 1:
             return formula
             
-        for i in range(0,len(path)-2,2):
-            con_var = path[i+1]
-            sol = self._get_fo(path[i+2], var = con_var).pop() #*Not Comprehansive
+        for i in range(0,len(trace)-2,2):
+            con_var = trace[i+1]
+            sol = self._get_fo(trace[i+2], var = con_var).pop() #*Not Comprehansive
             formula = formula.subs(con_var, sol)
             if formula.has(var):
                 return formula
@@ -402,11 +464,13 @@ class FormulaSearch:
         return all_connected
     
     
-    def _get_all_args(self): #Finds all equations free_symbols (args) and put them an a seperate column
-        return self.data[self.formula_col].str.split('[^.^\w]+').apply(lambda l: ftools.filter_args(l))
+
+    def _get_all_args(self):
+        return self.data[self.formula_col].str.join('').apply(lambda formula: ftools.filter_args(formula))
+        #str.join('') does nothing, but it must be used to pass the string to apply(...)
     
     
-    def _fix_path(self, path:list, func:str, var:str): ### Not complete
+    def _fix_trace(self, path:list, func:str, var:str): ### Not complete
         """
         The main goal here is to get rid of repetitive paths (not exactlly similar) 
         but they "certinally" give the same solution. 
@@ -423,9 +487,9 @@ class FormulaSearch:
         npath = []    
         ocv = None
         for b in range(0,len(path)-2,2):
-            l = path[b]
-            cv = path[b+1]
-            r = path[b+2]
+            l = path[b] #left
+            cv = path[b+1] # midel connected variable
+            r = path[b+2] #right
             if cv == func:
                 if not npath:
                     npath.append(r)
@@ -450,23 +514,35 @@ class FormulaSearch:
         return npath
     
     
-    def _fix_all_path(self, all_path, func:str, var:str):
+    def _fix_all_traces(self, all_path, func:str, var:str):
         all_npath = []
         for path in all_path:
-            npath = self._fix_path(path, func, var)
+            npath = self._fix_trace(path, func, var)
             if npath not in all_npath:
                 all_npath.append(npath)
         return all_npath
 
 
     def _get_shortest_path(self, all_paths):
-        shortest_path = all_paths[0]
-        sp_size = len(shortest_path)
+        shortest_path_size = {}
+        shortest_path = {}
         for path in all_paths:
-            p_size = len(path)
-            if  p_size < sp_size:
-                shortest_path = path
-                sp_size = p_size
+            fst, lst = path[0], path[-1]
+            if (fst, lst) not in shortest_path_size:
+                shortest_path_size[(fst, lst)] = len(path)
+                shortest_path[(fst, lst)] = [path]
+            else:
+                p_size = len(path)
+                sp_size = shortest_path_size[(fst, lst)]
+                if p_size == sp_size:
+                    shortest_path[(fst, lst)].append(path)
+                elif  p_size < sp_size:
+                    shortest_path[(fst, lst)] = [path] # That remove all old longer paths
+                    shortest_path_size[(fst, lst)] = p_size
+                else:
+                    continue
+                
+        shortest_path = [i for l in list(shortest_path.values()) for i in l]  # to flaten the list of the list
         return shortest_path
     
     

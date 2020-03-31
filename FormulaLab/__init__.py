@@ -7,4 +7,4 @@ __all__ = ['FormulaSearch',
 
 
 
-__version__ = '0.0.3.3'
+__version__ = '0.0.4'
