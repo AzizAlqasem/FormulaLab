@@ -1,5 +1,6 @@
 import unittest
 from FormulaLab.search import FormulaSearch
+#from search import FormulaSearch
 import sympy as sp
 
 
