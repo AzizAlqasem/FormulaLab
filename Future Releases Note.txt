@@ -1,6 +1,24 @@
 ____ Future Releases ____
-  
- __ FormulaLab 0.0.5 __
+	- To does:
+			- (Major) Derive(f, x) should continue deriving “f” for a specific target variable “x” even after finding f(x).
+			  i.e., f = f(a,b), a = a(x), b = b(c), c = c(x) —> curentlly: f = f(a(x), b(c)). The goal is to get: f = f(a(x), b(c(x)))
+			  This is more important than handling integrals! And it is going to help to do so later. What is needed
+			  is to: 1. stablize the deriving function. 2. Edit the deriving algorithm and give it more control on how to
+			  solve a path/trace. The algorithm should be able to keep track of what traces that have been derived, 
+			  and to be able to make a good decision about what should be derived and what should not be derived. 
+
+			- (Major) Function/Class that smartly add formulas to a database:
+				1- Make sure the formula is not already in the database (in any form!)
+				2- Give the formula a unique id
+				3- Add it to the graph (smartly) so by importing the database, FL does not have to 
+				    generate the graph and args agin  
+				4- Handle adding two different databases
+				5- Sorting database for search speed
+			
+			- (Major) Split between [deriving and finding formulas] and [searching in the database] 
+ 
+
+__ FormulaLab 0.0.5 __
 	- New Features:
 	    - Database:
 		- Add found formula to a database for future use.
@@ -25,11 +43,11 @@ ____ Future Releases ____
 
 __ FormulaLab 0.0.4 __
 	- Add Test
-	- Update Tutorials	- Update and restructure DataBase
+	- Update Tutorials
 	- Add Documentation:
 	    - How to write formulas
 	    - How to update the database
-	- Separate Creating Finger_print in a separate function
+	- Separate Creating Finger_print (become trace()) in a separate function
 
 
 ____ Released ____

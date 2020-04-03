@@ -1,5 +1,6 @@
 import unittest
-from FormulaLab.search import FormulaSearch
+#from FormulaLab.search import FormulaSearch
+from search import FormulaSearch
 import sympy as sp
 
 
@@ -10,6 +11,8 @@ global d,v,t,a,m,f
 d,v,t,a,m,f = sp.symbols('d v t a m f')
 
 fs = FormulaSearch(data=data)
+fs.handle_integrals_and_diff = True
+fs.handle_integrals_and_diff_mode = 'derive'
 
 class TestFormulaSearch(unittest.TestCase):
 

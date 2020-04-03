@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Code Documentation &#8212; FormulaLab 0.0.4 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to FormulaLab’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-FormulaLab.search">
+<span id="code-documentation"></span><h1>Code Documentation<a class="headerlink" href="#module-FormulaLab.search" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="FormulaLab.search.FormulaSearch">
+<em class="property">class </em><code class="sig-prename descclassname">FormulaLab.search.</code><code class="sig-name descname">FormulaSearch</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">formula_col='Formula'</em>, <em class="sig-param">id_col='ID'</em>, <em class="sig-param">save_all_derived_formulas=True</em><span class="sig-paren">)</span><a class="headerlink" href="#FormulaLab.search.FormulaSearch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formula is a search engine of Formulas database. It can go through equations 
+to find connections between two differernt variables.</p>
+<p>The database should be DataFrame, list, tuple, set, or dict.</p>
+<dl class="simple">
+<dt>The main functionalty of Formula:</dt><dd><p>1- find (function)   —&gt;  To direct search for formulas
+2- derive (function (variable))   —&gt;  To derive all possible functions(variable)
+3- function (expr) —&gt; convert a formula symbolic expr to a python function</p>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FormulaLab.search.FormulaSearch.derive" title="FormulaLab.search.FormulaSearch.derive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">derive</span></code></a>(self, func, var[, shortest_path, …])</p></td>
+<td><p>Search for the func and var, and connects them algabrically.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#FormulaLab.search.FormulaSearch.find" title="FormulaLab.search.FormulaSearch.find"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find</span></code></a>(self, func, vars, id[, function, …])</p></td>
+<td><p>Direct search for formula and variables.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FormulaLab.search.FormulaSearch.find_raw_formula" title="FormulaLab.search.FormulaSearch.find_raw_formula"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_raw_formula</span></code></a>(self, id)</p></td>
+<td><p>Find formula based on its id.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#FormulaLab.search.FormulaSearch.function" title="FormulaLab.search.FormulaSearch.function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">function</span></code></a>(self, func)</p></td>
+<td><p>Similar to find(function=True) …</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FormulaLab.search.FormulaSearch.get_formula_ids" title="FormulaLab.search.FormulaSearch.get_formula_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_formula_ids</span></code></a>(self, var[, id_col])</p></td>
+<td><p>search for id_columns bases on variable(s).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#FormulaLab.search.FormulaSearch.solve_for" title="FormulaLab.search.FormulaSearch.solve_for"><code class="xref py py-obj docutils literal notranslate"><span class="pre">solve_for</span></code></a>(self, expr, var)</p></td>
+<td><p>solve for var in an expr.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#FormulaLab.search.FormulaSearch.trace" title="FormulaLab.search.FormulaSearch.trace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">trace</span></code></a>(self, path)</p></td>
+<td><p>Trace shows how to get from a function to a variable.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="FormulaLab.search.FormulaSearch.derive">
+<code class="sig-name descname">derive</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">func: str</em>, <em class="sig-param">var: str</em>, <em class="sig-param">shortest_path=True</em>, <em class="sig-param">exclude_ids: tuple = None</em>, <em class="sig-param">add_solution=True</em><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#FormulaLab.search.FormulaSearch.derive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for the func and var, and connects them algabrically.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>func</strong><span class="classifier">str</span></dt><dd><p>The desired Funciton.</p>
+</dd>
+<dt><strong>var</strong><span class="classifier">str</span></dt><dd><p>The desired var.</p>
+</dd>
+<dt><strong>shortest_path: bool</strong></dt><dd></dd>
+<dt><strong>exclude_ids:tuple</strong></dt><dd><p>list of ids of the formulas that you do not to touch them in derivation!</p>
+</dd>
+<dt><strong>add_solution, bool</strong></dt><dd><p>When working in intermediate step, do not save the solution!
+You need this when you derive for integral or diff argument</p>
+</dd>
+<dt><strong>handle_integrals_and_diff, bool</strong></dt><dd><p>expand the integral to find solutions!</p>
+</dd>
+<dt><strong>mode, str</strong></dt><dd><p>“find” or “derive”</p>
+</dd>
+<dt><strong>Returns</strong></dt><dd></dd>
+<dt><strong>——-</strong></dt><dd></dd>
+<dt><strong>list</strong></dt><dd><p>All desired sol.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="FormulaLab.search.FormulaSearch.find">
+<code class="sig-name descname">find</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">func: str</em>, <em class="sig-param">vars: list = None</em>, <em class="sig-param">id: int = None</em>, <em class="sig-param">function=False</em>, <em class="sig-param">exclude_ids=[]</em><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#FormulaLab.search.FormulaSearch.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Direct search for formula and variables. If id is specified, then the search is 
+limited to one formula with id = “id”</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>func</strong><span class="classifier">str</span></dt><dd><p>desired function.</p>
+</dd>
+<dt><strong>vars:list</strong></dt><dd></dd>
+<dt><strong>id: int, optional</strong></dt><dd><p>Restrict the search to one formula</p>
+</dd>
+<dt><strong>function: bool</strong></dt><dd><p>to convert the output function to a python function</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>list</dt><dd><p>All desired functions.</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><dl class="simple">
+<dt>or a python function, at function=True</dt><dd></dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="FormulaLab.search.FormulaSearch.find_raw_formula">
+<code class="sig-name descname">find_raw_formula</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id</em><span class="sig-paren">)</span><a class="headerlink" href="#FormulaLab.search.FormulaSearch.find_raw_formula" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find formula based on its id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>id</strong><span class="classifier">int</span></dt><dd><p>Formula id.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>fo</strong><span class="classifier">str</span></dt><dd><p>DESCRIPTION.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="FormulaLab.search.FormulaSearch.function">
+<code class="sig-name descname">function</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">func: &lt;function symbols at 0x00000130A7FC4B88&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#FormulaLab.search.FormulaSearch.function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Similar to find(function=True) … return a python function</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="FormulaLab.search.FormulaSearch.get_formula_ids">
+<code class="sig-name descname">get_formula_ids</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">var: tuple</em>, <em class="sig-param">id_col='ID'</em><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#FormulaLab.search.FormulaSearch.get_formula_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>search for id_columns bases on variable(s). id_col can be changed! 
+Parameters
+———-
+var : tuple of str</p>
+<blockquote>
+<div><p>Must be tuple.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>id_col<span class="classifier">str, optional</span></dt><dd><p>DESCRIPTION. The default is ‘ID’.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>list</dt><dd><p>DESCRIPTION.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="FormulaLab.search.FormulaSearch.solve_for">
+<code class="sig-name descname">solve_for</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">expr: str</em>, <em class="sig-param">var: str</em><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#FormulaLab.search.FormulaSearch.solve_for" title="Permalink to this definition">¶</a></dt>
+<dd><p>solve for var in an expr. eg., “f = m  * a” —&gt; solve for a: [[ f / m ]]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>expr</strong><span class="classifier">str</span></dt><dd><p>DESCRIPTION.</p>
+</dd>
+<dt><strong>var</strong><span class="classifier">str</span></dt><dd><p>DESCRIPTION.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>list of list</dt><dd><p>list of list of exprestions of sympy symbols.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="FormulaLab.search.FormulaSearch.trace">
+<code class="sig-name descname">trace</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">path: list</em><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#FormulaLab.search.FormulaSearch.trace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trace shows how to get from a function to a variable.
+eg., [1, ‘a’, 2, ‘b’, 3], where [1,2,3] is the path, and [‘a’,’b’] 
+is the connected variable list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>path</strong><span class="classifier">list</span></dt><dd><p>path [1,2,3, …].</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>list</dt><dd><p>path and connected variables.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">FormulaLab</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Code Documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to FormulaLab’s documentation!</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Abdulaziz Alqasem.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/code.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

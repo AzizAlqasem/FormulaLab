@@ -1,4 +1,5 @@
 from FormulaLab.search import FormulaSearch
+import FormulaLab.test
 
 
 __all__ = ['FormulaSearch',
