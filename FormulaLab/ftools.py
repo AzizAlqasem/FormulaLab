@@ -146,6 +146,16 @@ def expand(path:list, conc_var:list) -> list:
         ft.append(w[::-1])
     return ft
 
+def flatten(lis, flatted_list=None):
+    if not flatted_list:
+        flatted_list = []
+    for i in lis:
+        if type(i) == list:
+            flatted_list = flatten(i, flatted_list)
+        else:
+            flatted_list.append(i)
+    return flatted_list
+
 
 
 

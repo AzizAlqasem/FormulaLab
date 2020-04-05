@@ -1,66 +1,83 @@
 ____ Future Releases ____
-	- To does:
-			- (Major) Derive(f, x) should continue deriving “f” for a specific target variable “x” even after finding f(x).
-			  i.e., f = f(a,b), a = a(x), b = b(c), c = c(x) —> curentlly: f = f(a(x), b(c)). The goal is to get: f = f(a(x), b(c(x)))
-			  This is more important than handling integrals! And it is going to help to do so later. What is needed
-			  is to: 1. stablize the deriving function. 2. Edit the deriving algorithm and give it more control on how to
-			  solve a path/trace. The algorithm should be able to keep track of what traces that have been derived, 
-			  and to be able to make a good decision about what should be derived and what should not be derived. 
-
-			- (Major) Function/Class that smartly add formulas to a database:
-				1- Make sure the formula is not already in the database (in any form!)
-				2- Give the formula a unique id
-				3- Add it to the graph (smartly) so by importing the database, FL does not have to 
-				    generate the graph and args agin  
-				4- Handle adding two different databases
-				5- Sorting database for search speed
-			
-			- (Major) Split between [deriving and finding formulas] and [searching in the database] 
- 
-
-__ FormulaLab 0.0.5 __
-	- New Features:
-	    - Database:
-		- Add found formula to a database for future use.
-		  The temporary database is not saved unless it is set to do so. The option should
- 		  be set to True/False when initiating the class. This should speed the calculation,
-		  and save important results.
-		- If the user want to use only a small portion of the database for his code using (get), 
-		  then, there should be a way to save that portion of database in
-		- Translate from full variable names to acronyms database.
-		- Add a formula to a database:
-		  - Check if the formula already exist.
-		  - Pick a unique ID
-		  - Sort the database by field?
-		  - Combine multiple database, and make sure there is no conflict in formulas ID. 
-	- Speed improvement:
+    # To does:
+	## FormulaSearch
+	  ### Majors:
+	    - (improvment) Derive(f, x) should continue deriving “f” for a specific target variable “x” even after finding f(x).
+	      i.e., f = f(a,b), a = a(x), b = b(c), c = c(x) —> curentlly: f = f(a(x), b(c)). The goal is to get: f = f(a(x), b(c(x)))
+	      This is more important than handling integrals! And it is going to help to do so later. What is needed
+	      is to: 1. stablize the deriving function. 2. Edit the deriving algorithm and give it more control on how to
+	      solve a path/trace. The algorithm should be able to keep track of what traces that have been derived, 
+	      and to be able to make a good decision about what should be derived and what should not be derived.
+	    - (New feature) subs(formula(s), subs_value(s)). Subs should loop over all formulas and subtitute. 
 	    - Graph:
-		- When a graph is created for specific data. Then, the user filter the data, the graph
-		  should not be retaken, but altered, such that the filtered data are not present. Now,			If the user remove the filter, the graph should be recovered without creating it again. 
+	        - When a graph is created for specific data. Then, the user filters the data, the graph
+		  should not be retaken, but altered, such that the filtered data are not present. Now,	
+		  If the user remove the filter, the graph should be recovered without creating it again. 
 		- Initialization:
 		- Creat the args col if there is non, (save it to the database?)
+	
+	   ### Minors:
+	     - 
+
+	 ## Database
+	   ### Majors:
+	     - Function/Class that smartly manage (eg., add formulas to) a database:
+		 - Make sure the formula is not already in the database (in any form!)
+		 - Give the formula a unique id
+		 - Add it to the graph (smartly) so by importing the database, FL does not have to 
+		   generate the graph and args agin  
+		 - Handle adding two different databases
+		 - Sorting database for search speed
+		 - Add found formula to a database for future use.
+		   The temporary database is not saved unless it is set to do so. The option should
+ 		   be set to True/False when initiating the class. This should speed the calculation,
+		   and save important results.
+		 - If the user want to use only a small portion of the database for his code using (find), 
+		   then, there should be a way to save that portion of database in a seperate file, for faster call.
+		 - Translate from full variable names to acronyms database.
+		 - Add a formula to a database:
+		 - Check if the formula already exist.
+		 - Pick a unique ID
+		 - Sort the database by field?
+		 - Combine multiple database, and make sure there is no conflict in formulas ID. 	
+	     - Split between [deriving and finding formulas] and [searching in the database], i.e, let the database search
  
 
-__ FormulaLab 0.0.4 __
-	- Add Test
-	- Update Tutorials
-	- Add Documentation:
-	    - How to write formulas
-	    - How to update the database
-	- Separate Creating Finger_print (become trace()) in a separate function
+
+__ FormulaLab 0.1 __
+
+	__ FormulaLab 0.1.0 __
+	    - New Features:
+		    
+	    - improvement:
+
+	    - Bugs fixed:
+
+	    - Changings:
+		
+ 
+
+__ FormulaLab 0.0 __
+
+	__ FormulaLab 0.0.4 __ (This should complete the 0.0 release!)
+		- Add Test
+		- Update Tutorials
+		- Add Documentation
+			1- Document the code
+			2- Creat a website (by sphinx).
+		- Separate Creating Finger_print (become trace()) in a separate function
 
 
 ____ Released ____
 
-  __ FormulaLab 0.0.3 __  Mar. 16, 2020
+  	__ FormulaLab 0.0.3 __  Mar. 16, 2020
+		- This first public release!
+		- The Main feature is FormulaLab.search.FormulaSearch which include:
+			1- get() : Direct search
+			2- find(): Search through mathmatical substitutions
+			3- function: Converts sympy symbols to python function.
 
-	- This first public release!
-	- The Main feature is FormulaLab.search.FormulaSearch which include:
-		1- get() : Direct search
-		2- find(): Search through mathmatical substitutions
-		3- function: Converts sympy symbols to python function.
-
-	- First release of FormulaLab.ftools, which is mainly supporting FormulaLab.search.
-	- First release of Documentation which only has a tutorial.ipnb
-	- First release of Formula DataBase, that has only 'Formula DataBase.csv' for testing.
+		- First release of FormulaLab.ftools, which is mainly supporting FormulaLab.search.
+		- First release of Documentation which only has a tutorial.ipnb
+		- First release of Formula DataBase, that has only 'Formula DataBase.csv' for testing.
 	
