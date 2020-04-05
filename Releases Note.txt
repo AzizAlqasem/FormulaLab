@@ -46,29 +46,28 @@ ____ Future Releases ____
 
 __ FormulaLab 0.1 __
 
-	__ FormulaLab 0.1.0 __
-	    - New Features:
-		    
-	    - improvement:
+	__ FormulaLab 0.1.1 __
 
-	    - Bugs fixed:
-
-	    - Changings:
-		
  
 
-__ FormulaLab 0.0 __
-
-	__ FormulaLab 0.0.4 __ (This should complete the 0.0 release!)
-		- Add Test
-		- Update Tutorials
-		- Add Documentation
-			1- Document the code
-			2- Creat a website (by sphinx).
-		- Separate Creating Finger_print (become trace()) in a separate function
+	__ FormulaLab 0.1.0 __ 
+		- Added search test
+		- Added webpage
+        		- Updated Tutorials
+        		- Added code Documentation
+        	- Source code is cleaned 
+        	- Bugs fixes
+		
 
 
 ____ Released ____
+
+  __ FormulaLab 0.0 __
+  
+    __ FormulaLab 0.0.4__ (Not officially released)
+        - Separate Creating Finger_print (become trace()) in a separate function
+        - Some Varibles Names has changed
+        - Bugs fixed
 
   	__ FormulaLab 0.0.3 __  Mar. 16, 2020
 		- This first public release!
@@ -76,8 +75,6 @@ ____ Released ____
 			1- get() : Direct search
 			2- find(): Search through mathmatical substitutions
 			3- function: Converts sympy symbols to python function.
-
 		- First release of FormulaLab.ftools, which is mainly supporting FormulaLab.search.
 		- First release of Documentation which only has a tutorial.ipnb
 		- First release of Formula DataBase, that has only 'Formula DataBase.csv' for testing.
-	
