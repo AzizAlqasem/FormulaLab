@@ -1,0 +1,464 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Code Documentation &#8212; FormulaLab 0.0.4 documentation</title>
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Formula Database Tutorial" href="Tutorial 2. Example Formula Database.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Tutorial 2. Example Formula Database.html" title="Formula Database Tutorial"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">FormulaLab 0.0.4 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Tutorial 2. Example Formula Database.html"
+                        title="previous chapter">Formula Database Tutorial</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/code.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-FormulaLab.search">
+<span id="code-documentation"></span><h1>Code Documentation<a class="headerlink" href="#module-FormulaLab.search" title="Permalink to this headline">¶</a></h1>
+<p>Documentation for FormulaLab.search module.
+This is the core module that aims to provide a search engine
+for formulas database.</p>
+<dl class="class">
+<dt id="FormulaLab.search.FormulaSearch">
+<em class="property">class </em><code class="sig-prename descclassname">FormulaLab.search.</code><code class="sig-name descname">FormulaSearch</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">formula_col='Formula'</em>, <em class="sig-param">id_col='ID'</em>, <em class="sig-param">save_all_derived_formulas=True</em><span class="sig-paren">)</span><a class="headerlink" href="#FormulaLab.search.FormulaSearch" title="Permalink to this definition">¶</a></dt>
+<dd><p>FormulaSearch is a class that search in formulas database.
+It can go through equations to find connections between two differernt
+variables in different formulas.
+The database should be a DataFrame, list, tuple, set, or dict.</p>
+<dl class="simple">
+<dt><strong>The main functionalties for FormulaSearch are:</strong></dt><dd><dl class="simple">
+<dt>1- find(function)</dt><dd><p>Directly search for formulas.</p>
+</dd>
+<dt>2- derive(function (variable))</dt><dd><p>Derive all possible functions(variable).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>data</strong><span class="classifier">Pandas.DataFrame, list, dict, set or tuple</span></dt><dd><p>Your formulas database.</p>
+</dd>
+<dt><strong>formula_col</strong><span class="classifier">str, optional</span></dt><dd><p>The column name of formulas database if the input data is a
+DataFrame. The formula column name must match <cite>formula_col</cite>.
+The default is “Formula”.</p>
+</dd>
+<dt><strong>id_col</strong><span class="classifier">str, optional</span></dt><dd><p>The ID column of the database must match the <cite>id_col</cite>.
+The default is ‘ID’.</p>
+</dd>
+<dt><strong>save_all_derived_formulas</strong><span class="classifier">bool</span></dt><dd><p>All derieved formulas are temporarily stored in
+‘self.all_derived_formulas’</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>obj</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">FormulaLab</span> <span class="k">as</span> <span class="nn">fl</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;f = m*a&#39;</span><span class="p">,</span> <span class="s1">&#39;a = v/t&#39;</span><span class="p">,</span> <span class="s1">&#39;d = v*t&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phyfos</span> <span class="o">=</span> <span class="n">fl</span><span class="o">.</span><span class="n">FormulaSearch</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phyfos</span><span class="o">.</span><span class="n">data</span>
+<span class="go">      ID  Formula       Args</span>
+<span class="go">   0   1  f = m*a  [m, f, a]</span>
+<span class="go">   1   2  a = v/t  [v, a, t]</span>
+<span class="go">   2   3  d = v*t  [v, d, t]</span>
+<span class="go">    *The Args col. is automaticlly generated</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>data</strong><span class="classifier">pandas.DataFrame</span></dt><dd></dd>
+<dt><strong>all_derived_formulas</strong><span class="classifier">set</span></dt><dd><p>Collect all derived formulas that have been found by derive().</p>
+</dd>
+<dt><strong>traces</strong><span class="classifier">list</span></dt><dd><p>Once the derive method is called, one can see the traces of the
+derivation.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>derive(func, var)</strong></p></td>
+<td><p>Find formulas through algebric substitutions.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>find(func, vars, id)</strong></p></td>
+<td><p>Directly search for a function <cite>func</cite> in terms of <cite>vars</cite> or <cite>id</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>function(func:symbols)</strong></p></td>
+<td><p>Converts a symbolic expr to a python function, wraping over sympy.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>find_raw_formula(id)</strong></p></td>
+<td><p>Find a formula in the database based on its <cite>id</cite>, in string format.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>solve_for(expr:str, var:str)</strong></p></td>
+<td><p>Solve for a variable from an exprestion, wraping over sympy.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>trace(path)</strong></p></td>
+<td><p>Shows the detailed path of how to get from a function to a variable.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="FormulaLab.search.FormulaSearch.derive">
+<code class="sig-name descname">derive</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">func: str</em>, <em class="sig-param">var: str</em>, <em class="sig-param">shortest_path=True</em><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#FormulaLab.search.FormulaSearch.derive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for the <cite>func</cite> and <cite>var</cite>, and connects them algabrically.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>func</strong><span class="classifier">str</span></dt><dd><p>A funciton to solve for.</p>
+</dd>
+<dt><strong>var</strong><span class="classifier">str</span></dt><dd><p>A variable to be present in the derived formula.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>list</dt><dd><p>All found solutions by different paths.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#FormulaLab.search.FormulaSearch.find" title="FormulaLab.search.FormulaSearch.find"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find</span></code></a></dt><dd><p>For direct search</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">FormulaLab</span> <span class="k">as</span> <span class="nn">fl</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;f = m*a&#39;</span><span class="p">,</span> <span class="s1">&#39;a = v/t&#39;</span><span class="p">,</span> <span class="s1">&#39;v = d/t&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Say you want to know what is f(d) = ?</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phyfos</span> <span class="o">=</span> <span class="n">fl</span><span class="o">.</span><span class="n">FormulaSearch</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phyfos</span><span class="o">.</span><span class="n">data</span>
+<span class="go">      ID  Formula       Args</span>
+<span class="go">   0   1  f = m*a  [m, f, a]</span>
+<span class="go">   1   2  a = v/t  [v, a, t]</span>
+<span class="go">   2   3  v = d/t  [v, d, t]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f_d</span> <span class="o">=</span> <span class="n">phyfos</span><span class="o">.</span><span class="n">derive</span><span class="p">(</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">f_d</span><span class="p">)</span>
+<span class="go">[d*m/t**2, m*v**2/d]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="FormulaLab.search.FormulaSearch.find">
+<code class="sig-name descname">find</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">func: str</em>, <em class="sig-param">vars: list = None</em>, <em class="sig-param">id: int = None</em>, <em class="sig-param">function: bool = False</em><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#FormulaLab.search.FormulaSearch.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Direct search for a function with respect to variable(s).
+If id is specified, then the search is limited to one formula
+with id = “id”. If more than one variable are introdueced, then only
+formula(s) with all specified variable(s) are found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>func</strong><span class="classifier">str</span></dt><dd><p>Desired function.</p>
+</dd>
+<dt><strong>vars</strong><span class="classifier">list</span></dt><dd><p>Desired variables</p>
+</dd>
+<dt><strong>id</strong><span class="classifier">int, optional</span></dt><dd><p>Restrict the search to one formula</p>
+</dd>
+<dt><strong>function: bool</strong></dt><dd><p>To convert the output function to a python function</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>list</dt><dd><p>All found formulas in symbolic form. Or as a python function,
+at function=True</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#FormulaLab.search.FormulaSearch.derive" title="FormulaLab.search.FormulaSearch.derive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">derive</span></code></a></dt><dd><p>For indirect search</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">FormulaLab</span> <span class="k">as</span> <span class="nn">fl</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;f = m*a&#39;</span><span class="p">,</span> <span class="s1">&#39;a = v/t&#39;</span><span class="p">,</span> <span class="s1">&#39;d = v*t&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Say you want to know what is v(t,a) = ?</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phyfos</span> <span class="o">=</span> <span class="n">fl</span><span class="o">.</span><span class="n">FormulaSearch</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phyfos</span><span class="o">.</span><span class="n">data</span>
+<span class="go">      ID  Formula       Args</span>
+<span class="go">   0   1  f = m*a  [m, f, a]</span>
+<span class="go">   1   2  a = v/t  [v, a, t]</span>
+<span class="go">   2   3  d = v*t  [v, d, t]</span>
+<span class="go">*The Args col. is automaticlly generated</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v_t_a</span> <span class="o">=</span> <span class="n">phyfos</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">v_t_a</span><span class="p">)</span>
+<span class="go">[a*t]</span>
+</pre></div>
+</div>
+<p>Now, say you are only focused on one formula (eg., ID=3) and you want
+to call it in different places in your code/project, but you do not
+want to rewrite it again many times. Here where <cite>find</cite> becomes handy!
+In any place in your project, you call you formula by its <cite>id</cite> and in
+any form you want: <cite>func (vars)</cite>. For example,</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">phyfos</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">[f/m]</span>
+</pre></div>
+</div>
+<p>If you wish the output to be as a pyhon func, then:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">phyfos</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">function</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">2.5</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="FormulaLab.search.FormulaSearch.find_raw_formula">
+<code class="sig-name descname">find_raw_formula</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id</em><span class="sig-paren">)</span><a class="headerlink" href="#FormulaLab.search.FormulaSearch.find_raw_formula" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find a formula in the database based on its <cite>id</cite>, in string format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>id</strong><span class="classifier">int</span></dt><dd><p>Formula id.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>str</dt><dd><p>The formula as it is in the database.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#FormulaLab.search.FormulaSearch.find" title="FormulaLab.search.FormulaSearch.find"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find</span></code></a></dt><dd><p>In symbolic format</p>
+</dd>
+</dl>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="FormulaLab.search.FormulaSearch.function">
+<em class="property">static </em><code class="sig-name descname">function</code><span class="sig-paren">(</span><em class="sig-param">formula: &lt;function symbols at 0x0000013B456CECA8&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#FormulaLab.search.FormulaSearch.function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a symbolic formula to a python function
+Similar to find(,, function=True). A static method that is
+wrapped over sympy.lambdify</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>formula</strong><span class="classifier">sp.symbols or list</span></dt><dd><p>Formula(s) in symbolic form, or list of them.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>function</dt><dd><p>python function. Or list of python functions, depends on input.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#FormulaLab.search.FormulaSearch.find" title="FormulaLab.search.FormulaSearch.find"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find</span></code></a></dt><dd><p>find(,, function=True)</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">FormulaLab</span> <span class="k">as</span> <span class="nn">fl</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="n">m</span> <span class="o">*</span> <span class="n">a</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># You want to convert expr into a python function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expr_f</span> <span class="o">=</span> <span class="n">fl</span><span class="o">.</span><span class="n">FormulaSearch</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">expr_f</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+<span class="go">6.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="FormulaLab.search.FormulaSearch.get_formula_info">
+<code class="sig-name descname">get_formula_info</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">var: tuple</em>, <em class="sig-param">target_col: str = 'ID'</em><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#FormulaLab.search.FormulaSearch.get_formula_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>search in <cite>target_col</cite> bases on variable(s).
+<cite>target_col</cite> can be any column in the database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>var</strong><span class="classifier">tuple of str</span></dt><dd><p>The varible of interest.</p>
+</dd>
+<dt><strong>target_col</strong><span class="classifier">str, optional</span></dt><dd><p>The search col. The default is ‘ID’.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>list</dt><dd><p>list of the found information.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="FormulaLab.search.FormulaSearch.solve_for">
+<em class="property">static </em><code class="sig-name descname">solve_for</code><span class="sig-paren">(</span><em class="sig-param">expr: str</em>, <em class="sig-param">var: str</em><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#FormulaLab.search.FormulaSearch.solve_for" title="Permalink to this definition">¶</a></dt>
+<dd><p>solve for <cite>var</cite> in <cite>expr</cite>.
+This function wrap over sympy.solve</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>expr</strong><span class="classifier">str</span></dt><dd><p>A formula in a string format.</p>
+</dd>
+<dt><strong>var</strong><span class="classifier">str</span></dt><dd><p>The variable that is being solved for.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>list of list</dt><dd><p>list of list of exprestions of sympy.symbols.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">FormulaLab</span> <span class="k">as</span> <span class="nn">fl</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fl</span><span class="o">.</span><span class="n">FormulaSearch</span><span class="o">.</span><span class="n">solve_for</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="s2">&quot;f = m  * a&quot;</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="go">[[ f / m ]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="FormulaLab.search.FormulaSearch.trace">
+<code class="sig-name descname">trace</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">path: list</em><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#FormulaLab.search.FormulaSearch.trace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the detailed path of how to get from a function to a variable.
+eg., [1, ‘a’, 2, ‘b’, 3], where [1,2,3] is the path, and [‘a’,’b’]
+is the connected variable list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>path</strong><span class="classifier">list</span></dt><dd><p>A list of connected ides of formulas</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>list</dt><dd><p>detailed path of connected variables and formulas’ id.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">FormulaLab</span> <span class="k">as</span> <span class="nn">fl</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;f = m*a&#39;</span><span class="p">,</span> <span class="s1">&#39;a = v/t&#39;</span><span class="p">,</span> <span class="s1">&#39;d = v*t&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phyfos</span> <span class="o">=</span> <span class="n">fl</span><span class="o">.</span><span class="n">FormulaSearch</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phyfos</span><span class="o">.</span><span class="n">data</span>
+<span class="go">      ID  Formula       Args</span>
+<span class="go">   0   1  f = m*a  [m, f, a]</span>
+<span class="go">   1   2  a = v/t  [v, a, t]</span>
+<span class="go">   2   3  d = v*t  [v, d, t]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phyfos</span><span class="o">.</span><span class="n">trace</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="go">[[1, &#39;a&#39;, 2, &#39;t&#39;, 3], [1, &#39;a&#39;, 2, &#39;v&#39;, 3]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Tutorial 2. Example Formula Database.html" title="Formula Database Tutorial"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">FormulaLab 0.0.4 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Abdulaziz Alqasem.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+  </body>
+</html>

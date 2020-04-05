@@ -18,21 +18,70 @@ from FormulaLab import ftools
 class FormulaSearch:
     """FormulaSearch is a class that search in formulas database.
     It can go through equations to find connections between two differernt
-    variables. The database should be DataFrame, list, tuple, set, or dict.
+    variables in different formulas.
+    The database should be a DataFrame, list, tuple, set, or dict.
 
-    The main functionalties of FormulaSearch class, are:
-        1- find (function) ---> Directly search for formulas.
-        2- derive (function (variable)) ---> Derive all possible
-           functions(variable).
-        3- function (expr) ---> convert a formula symbolic expr to a python
-           function.
+    **The main functionalties for FormulaSearch are:**
+        1- find(function)
+            Directly search for formulas.
+        2- derive(function (variable))
+            Derive all possible functions(variable).
+
+    Parameters
+    ----------
+    data : Pandas.DataFrame, list, dict, set or tuple
+        Your formulas database.
+    formula_col : str, optional
+        The column name of formulas database if the input data is a
+        DataFrame. The formula column name must match `formula_col`.
+        The default is "Formula".
+    id_col : str, optional
+        The ID column of the database must match the `id_col`.
+        The default is 'ID'.
+    save_all_derived_formulas : bool
+        All derieved formulas are temporarily stored in
+        'self.all_derived_formulas'
+
+    Returns
+    -------
+    obj
+
+    Attributes
+    ----------
+    data : pandas.DataFrame
+    all_derived_formulas : set
+        Collect all derived formulas that have been found by derive().
+    traces : list
+        Once the derive method is called, one can see the traces of the
+        derivation.
 
     Methods
     -------
+    derive(func, var)
+        Find formulas through algebric substitutions.
+    find(func, vars, id)
+        Directly search for a function `func` in terms of `vars` or `id`.
     function(func:symbols)
         Converts a symbolic expr to a python function, wraping over sympy.
+    find_raw_formula(id)
+        Find a formula in the database based on its `id`, in string format.
     solve_for(expr:str, var:str)
         Solve for a variable from an exprestion, wraping over sympy.
+    trace(path)
+        Shows the detailed path of how to get from a function to
+        a variable.
+
+    Examples
+    --------
+    >>> import FormulaLab as fl
+    >>> data = ['f = m*a', 'a = v/t', 'd = v*t']
+    >>> phyfos = fl.FormulaSearch(data)
+    >>> phyfos.data
+          ID  Formula       Args
+       0   1  f = m*a  [m, f, a]
+       1   2  a = v/t  [v, a, t]
+       2   3  d = v*t  [v, d, t]
+        *The Args col. is automaticlly generated
 
     """
 
@@ -40,44 +89,8 @@ class FormulaSearch:
                  save_all_derived_formulas=True):
         """Convert data into pandas.DataFrame and generate a graph for formulas.
 
-
-        Parameters
-        ----------
-        data : Pandas.DataFrame, list, dict, set or tuple
-            Your formulas database.
-        formula_col : str, optional
-            The column name of formulas database if the input data is a
-            DataFrame. The formula column name must match `formula_col`.
-            The default is "Formula".
-        id_col : str, optional
-            The ID column of the database must match the `id_col`.
-            The default is 'ID'.
-        save_all_derived_formulas : bool
-            All derieved formulas are temporarily stored in
-            'self.all_derived_formulas'
-
-        Returns
-        -------
-        None.
-
-        Attributes
-        ----------
-        data : pandas.DataFrame
-        all_derived_formulas : set
-            Collect all derived formulas that have been found by derive().
-
-        Methods
-        -------
-        derive(func, var)
-            Find formulas through algebric substitutions.
-        find(func, vars, id)
-            Directly search for a function `func` in terms of `vars` or `id`.
-        find_raw_formula(id)
-            Find a formula in the database based on its `id`, in string format.
-        trace(path)
-            Shows the detailed path of how to get from a function to a variable.
-
         """
+
         #* formula_col, id_col, and graph should be privet attributes "_a"
         self.formula_col = formula_col
         self.id_col = id_col
@@ -94,14 +107,10 @@ class FormulaSearch:
                 raise TypeError('The input data type: "{}" is not supported!\
                               Instead use Pandas.DatFrame, list, dict, tuple\
                               or set'.format(type(data)))
-
-        else: #pd.DataFrame
+        else:  # pd.DataFrame
             self.data = data
-
-
         # Generate Graph
         self.graph = self._generate_graph()
-
         # All derived formulas stored temporary here:
         self.save_all_derived_formulas = save_all_derived_formulas
         self.all_derived_formulas = set([])
@@ -114,9 +123,9 @@ class FormulaSearch:
         Parameters
         ----------
         func : str
-            The desired Funciton.
+            A funciton to solve for.
         var : str
-            The desired variable.
+            A variable to be present in the derived formula.
 
         Returns
         -------
@@ -139,8 +148,6 @@ class FormulaSearch:
            0   1  f = m*a  [m, f, a]
            1   2  a = v/t  [v, a, t]
            2   3  v = d/t  [v, d, t]
-        *The Args col. is automaticlly generated
-
         >>> f_d = phyfos.derive('f', 'd')
         >>> print(f_d)
         [d*m/t**2, m*v**2/d]
@@ -227,7 +234,6 @@ class FormulaSearch:
            1   2  a = v/t  [v, a, t]
            2   3  d = v*t  [v, d, t]
         *The Args col. is automaticlly generated
-
         >>> v_t_a = phyfos.find('v', ['t','a'])
         >>> print(v_t_a)
         [a*t]
@@ -236,12 +242,14 @@ class FormulaSearch:
         to call it in different places in your code/project, but you do not
         want to rewrite it again many times. Here where `find` becomes handy!
         In any place in your project, you call you formula by its `id` and in
-        any form you want: `func`(`vars`). For example,
+        any form you want: `func (vars)`. For example,
+
         >>> a = phyfos.find(func='a', id=1)
         >>> print(a)
         [f/m]
 
         If you wish the output to be as a pyhon func, then:
+
         >>> a = phyfos.find(func='a', id=1, function=True)
         >>> a(f=5,m=2)
         2.5
@@ -392,8 +400,6 @@ class FormulaSearch:
            0   1  f = m*a  [m, f, a]
            1   2  a = v/t  [v, a, t]
            2   3  d = v*t  [v, d, t]
-        *The Args col. is automaticlly generated
-
         >>> phyfos.trace([1,2,3])
         [[1, 'a', 2, 't', 3], [1, 'a', 2, 'v', 3]]
 
@@ -511,8 +517,8 @@ class FormulaSearch:
     def _find_all_paths(self, fids: list, vids: list, shortest_path=True):
         """
         Finds all possible paths from a list of formula ides and variable ids.
-        Shortest path select only the smallest length of a path out of paths that
-        has the same starting id and ending id.
+        Shortest path select only the smallest length of a path out of paths
+        that has the same starting id and ending id.
 
         Parameters
         ----------
@@ -563,8 +569,8 @@ class FormulaSearch:
         return FormulaSearch.solve_for(expr=fo, var=var)
 
 
-
-    def _solve_trace(self, trace: list, fun: str, var: str):# Expensive algorithem!
+    # Expensive algorithem!
+    def _solve_trace(self, trace: list, fun: str, var: str):
         """Takes the trace and does the algebra to find fun(var)
 
         Parameters
