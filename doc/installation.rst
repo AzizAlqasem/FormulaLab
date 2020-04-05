@@ -2,7 +2,7 @@ Installation
 ============
 
 **Before installation, FormulaLab depends on:**
-    1. `Python <https://www.python.org/>`_ >= 3.6
+    1. `Python <https://www.python.org/>`_ >= 3.4
     2. `Sympy <https://www.sympy.org/en/index.html>`_
     3. `Pandas <https://pandas.pydata.org/>`_
     4. `Numpy <https://numpy.org/>`_
