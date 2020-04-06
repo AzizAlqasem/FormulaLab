@@ -17,21 +17,21 @@ class TestFormulaSearch(unittest.TestCase):
     
     def test_derive(self):
         # var and func in the same formula
-        self.assertEqual(fs.derive('d', 'v', shortest_path=True), [t*v, v**2/a])
+        self.assertCountEqual(fs.derive('d', 'v', shortest_path=True), [t*v, v**2/a])
         # func and var are not in the same formula
-        self.assertEqual(fs.derive('d', 'f',shortest_path=True), [m*v**2/f, f*t**2/m])
+        self.assertCountEqual(fs.derive('d', 'f',shortest_path=True), [m*v**2/f, f*t**2/m])
         # Shortest_path is False
-        self.assertEqual(fs.derive('d', 'f',shortest_path=False), [m*v**2/f, f*t**2/m])
+        self.assertCountEqual(fs.derive('d', 'f',shortest_path=False), [m*v**2/f, f*t**2/m])
        
     def test_find(self):
         # func
-        self.assertEqual(fs.find('a', function=False), [v/t, f/m])
+        self.assertCountEqual(fs.find('a', function=False), [v/t, f/m])
         # func and var
-        self.assertEqual(fs.find('f','a',function=False), [a*m])
+        self.assertCountEqual(fs.find('f','a',function=False), [a*m])
         # Func and vars
-        self.assertEqual(fs.find('a',['t','v'],function=False), [v/t])
+        self.assertCountEqual(fs.find('a',['t','v'],function=False), [v/t])
         # Func and id
-        self.assertEqual(fs.find('a', id=3,function=False), [f/m])
+        self.assertCountEqual(fs.find('a', id=3,function=False), [f/m])
         #func and function=True
         self.assertEqual(fs.find('a', id=3, function=True)(f=3, m=2), 1.5)
         
@@ -45,17 +45,17 @@ class TestFormulaSearch(unittest.TestCase):
     
     
     def test_solve_for(self):
-        self.assertEqual(fs.solve_for(expr='f = m * a', var='a'),[f/m])
+        self.assertCountEqual(fs.solve_for(expr='f = m * a', var='a'),[f/m])
         # expr with no equal sign
-        self.assertEqual(fs.solve_for(expr='-f + m*a', var='a'),[f/m])
+        self.assertCountEqual(fs.solve_for(expr='-f + m*a', var='a'),[f/m])
         
     
     def test_trace(self):
-        self.assertEqual(fs.trace([1,2,3]), [[1, 't', 2, 'a', 3], [1, 'v', 2, 'a', 3]])
+        self.assertCountEqual(fs.trace([1,2,3]), [[1, 't', 2, 'a', 3], [1, 'v', 2, 'a', 3]])
         
     
     def test_get_formula_ids(self):
-        self.assertEqual(fs.get_formula_ids('a'), [2, 3])
+        self.assertCountEqual(fs.get_formula_ids('a'), [2, 3])
         
     
     def test_generate_graph(self):

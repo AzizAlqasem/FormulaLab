@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: FormulaLab
-Version: 0.1.0b0
+Version: 0.1.0
 Summary: Search Engine of Mathmatical Formulas Database
 Home-page: https://azizalqasem.github.io/FormulaLab/index.html
 Author: Abdulaziz Alqasem
@@ -20,10 +20,11 @@ Description: # FormulaLab
         * Sympy
         * Pandas  
         
-        To install [FormulaLab](https://pypi.org/project/FormulaLab/):
+        To install [FormulaLab](https://azizalqasem.github.io/FormulaLab/):
         ```python
         $ pip install FormulaLab
         ```
+        
         
         ## Usages
         
@@ -61,8 +62,8 @@ Description: # FormulaLab
         
         
         ### Author
-            Abdulaziz Alqasem
-            Aziz_Alqasem@hotmail.com
+        Abdulaziz Alqasem
+        Aziz_Alqasem@hotmail.com
         
         
         ### References

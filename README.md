@@ -52,8 +52,8 @@ visit [FormulaLab](https://azizalqasem.github.io/FormulaLab/)
 
 
 ### Author
-Abdulaziz Alqasem
-Aziz_Alqasem@hotmail.com
+    Abdulaziz Alqasem
+    Aziz_Alqasem@hotmail.com
 
 
 ### References
