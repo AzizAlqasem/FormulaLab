@@ -1,10 +1,10 @@
 # FormulaLab
-[FormulaLab]() is a package that allows you to **derive** new formulas,
-**search** in formulas database, and **mange** your formulas database to
-connect it effeciently to your project code.
+[FormulaLab](https://azizalqasem.github.io/FormulaLab/) is a package that allows 
+you to **derive** new formulas, **search** in formulas database, and **mange** 
+your formulas database to connect it effeciently to your project code.
 
 
-# Installation
+## Installation
 FormulaLab depends on: 
 * python +3.4
 * Sympy
@@ -15,7 +15,7 @@ To install [FormulaLab](https://pypi.org/project/FormulaLab/):
 $ pip install FormulaLab
 ```
 
-# Usages
+## Usages
 
 ```python
 >>> import FormulaLab as fl
@@ -46,14 +46,14 @@ $ pip install FormulaLab
 
 ```
 
-# For tutorals and documentations vist
-[FormulaLab]()
+## For tutorals and documentations
+visit [FormulaLab](https://azizalqasem.github.io/FormulaLab/)
 
 
-# Author
+### Author
     Abdulaziz Alqasem
     Aziz_Alqasem@hotmail.com
 
 
-# References
+### References
 FormulLab is bult upon [SymPy](https://www.sympy.org/en/index.html)
