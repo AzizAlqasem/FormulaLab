@@ -42,7 +42,7 @@ $ pip install FormulaLab
 [F/m, v/t]
 
 # What if you want "a" as a function of "t" and "v", only in a direct search:
->>> phy_search.find('a', ['t','v'])    # Also you can say here: phy_search.get('a', 't') 
+>>> phy_search.find('a', ['t','v'])
 [v/t] 
 
 ```
