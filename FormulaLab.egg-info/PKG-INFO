@@ -1,0 +1,86 @@
+Metadata-Version: 2.1
+Name: FormulaLab
+Version: 0.1.0b0
+Summary: Search Engine of Mathmatical Formulas Database
+Home-page: https://azizalqasem.github.io/FormulaLab/index.html
+Author: Abdulaziz Alqasem
+Author-email: Aziz_Alqasem@hotmail.com
+License: UNKNOWN
+Project-URL: Documentation, https://azizalqasem.github.io/FormulaLab/index.html
+Project-URL: Source, https://github.com/AzizAlqasem/FormulaLab
+Description: # FormulaLab
+        [FormulaLab](https://azizalqasem.github.io/FormulaLab/) is a package that allows 
+        you to **derive** new formulas, **search** in formulas database, and **mange** 
+        your formulas database to connect it effeciently to your project code.
+        
+        
+        ## Installation
+        FormulaLab depends on: 
+        * python +3.4
+        * Sympy
+        * Pandas  
+        
+        To install [FormulaLab](https://pypi.org/project/FormulaLab/):
+        ```python
+        $ pip install FormulaLab
+        ```
+        
+        ## Usages
+        
+        ```python
+        >>> import FormulaLab as fl
+        
+        >>> Physics_formulas = ['F = m * a', 'v = a * t']
+        >>> phy_search = fl.FormulaSearch(data=Physics_formulas)
+        
+        # Now say you want to derive F as a function of t
+        >>> Force = phy_search.derive('F', 't')
+        >>> Force
+        [m*v/t]
+        
+        # Now you want to convert it to a python function
+        >>> Force_py = fl.function(Force)
+        >>> Force_py(m = 2, v = 3, t = 2)
+        3.0
+        
+        # Now you want to find the the value of "t" in a direct search (no subtitution)
+        >>> phy_search.find('t')
+        [v/a]
+        
+        >>> phy_search.find('a')
+        [F/m, v/t]
+        
+        # What if you want "a" as a function of "t" and "v", only in a direct search:
+        >>> phy_search.find('a', ['t','v'])    # Also you can say here: phy_search.get('a', 't') 
+        [v/t] 
+        
+        ```
+        
+        ## Tutorals and documentations
+        visit [FormulaLab](https://azizalqasem.github.io/FormulaLab/)
+        
+        
+        ### Author
+            Abdulaziz Alqasem
+            Aziz_Alqasem@hotmail.com
+        
+        
+        ### References
+        FormulLab is bult upon [SymPy](https://www.sympy.org/en/index.html)
+        
+Keywords: FormulaLab,Formulas Search Engine,Deriving Formulas,Formulas,Search,derivation,database,math,physics,Science,Engineering,Solving equations,equations,Formula,Scientific Research
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Science/Research
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Education
+Classifier: Topic :: Database
+Classifier: Topic :: Documentation :: Sphinx
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: Topic :: Scientific/Engineering :: Physics
+Requires-Python: >=3.4
+Description-Content-Type: text/markdown

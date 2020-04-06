@@ -10,10 +10,11 @@ FormulaLab depends on:
 * Sympy
 * Pandas  
 
-To install [FormulaLab](https://pypi.org/project/FormulaLab/):
+To install [FormulaLab](https://azizalqasem.github.io/FormulaLab/):
 ```python
 $ pip install FormulaLab
 ```
+
 
 ## Usages
 
@@ -51,8 +52,8 @@ visit [FormulaLab](https://azizalqasem.github.io/FormulaLab/)
 
 
 ### Author
-    Abdulaziz Alqasem
-    Aziz_Alqasem@hotmail.com
+Abdulaziz Alqasem
+Aziz_Alqasem@hotmail.com
 
 
 ### References
