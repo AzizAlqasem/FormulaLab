@@ -1,0 +1,361 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Formula Database Tutorial\n",
+    "  \n",
+    "    outline:\n",
+    "    1. How to better write your formulas in the database.\n",
+    "    2. Comming soon!\n",
+    "    "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "import pandas as pd\n",
+    "import sympy as sp\n",
+    "\n",
+    "import FormulaLab as fl"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 1. How to write your formulas in the database\n",
+    "\n",
+    "**FormulaLab has specific assumptions when reading formulas, such as:**\n",
+    "    \n",
+    "    1. Case sensitivity. (A does not equal a)\n",
+    "    2. Follows python syntax, such as, power (**) not (^)\n",
+    "    3. Follow SymPy syntax, such as, sin, cos, integrate, diff, ...\n",
+    "    4. All different variables must have different names in one database, \n",
+    "    to avoid mixing physics!\n",
+    "    5. Constants should ends with \"_\" (eg., speed_of_light_, plank_, gravity_).\n",
+    "       Because constants does not help with derivation and slow the searching \n",
+    "       speed.\n",
+    "    6. (Optional) It is recomended to use capital letters with Vector quantities \n",
+    "    and small letters with scalar quantities(eg., Force, mass). \n",
+    "    (FormulaLab will tell the difference in future versions)\n",
+    "       \n",
+    "**Suggestions:**\n",
+    "\n",
+    "    1- Write a full and uniqe name of all of the variables in your formula \n",
+    "    database.\n",
+    "    2- Add as many column in your database as you can, so you can use them \n",
+    "    later as filters. \n",
+    "    Because formulas can be mixed with unrelated field of study, which leads \n",
+    "    to wrong answers.\n",
+    "    3- Add underscore \"_\" at the end of constants."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>ID</th>\n",
+       "      <th>Formula</th>\n",
+       "      <th>Field</th>\n",
+       "      <th>Reference</th>\n",
+       "      <th>Note</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1</td>\n",
+       "      <td>Displacement = Velocity * time</td>\n",
+       "      <td>Mechanics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2</td>\n",
+       "      <td>Acceleration = Velocity / time</td>\n",
+       "      <td>Mechanics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>3</td>\n",
+       "      <td>Force = mass * Acceleration</td>\n",
+       "      <td>Mechanics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>4</td>\n",
+       "      <td>Weight = mass * Gravety</td>\n",
+       "      <td>Mechanics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>5</td>\n",
+       "      <td>Momentum = mass * Velocity</td>\n",
+       "      <td>Mechanics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>6</td>\n",
+       "      <td>Centerpetal_acceleration = Velocity**2 / radious</td>\n",
+       "      <td>Mechanics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>7</td>\n",
+       "      <td>work = Force * Displacement</td>\n",
+       "      <td>Mechanics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>8</td>\n",
+       "      <td>Kinetic_energy = mass * Velocity**2 / 2</td>\n",
+       "      <td>Mechanics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>9</td>\n",
+       "      <td>Power = work / time</td>\n",
+       "      <td>Mechanics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>10</td>\n",
+       "      <td>pressure = Force / Area</td>\n",
+       "      <td>Mechanics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>10</th>\n",
+       "      <td>11</td>\n",
+       "      <td>frequency = c_ / wavelength</td>\n",
+       "      <td>Waves</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>11</th>\n",
+       "      <td>12</td>\n",
+       "      <td>time_perioud = 1 / frequency</td>\n",
+       "      <td>Waves</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>12</th>\n",
+       "      <td>13</td>\n",
+       "      <td>refractive_index = c_ / Velocity</td>\n",
+       "      <td>Waves</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>13</th>\n",
+       "      <td>14</td>\n",
+       "      <td>Electric_field = Force / charge</td>\n",
+       "      <td>EM</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>14</th>\n",
+       "      <td>15</td>\n",
+       "      <td>Electric_potential = Electric_field * Displace...</td>\n",
+       "      <td>EM</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "    ID                                            Formula      Field  \\\n",
+       "0    1                     Displacement = Velocity * time  Mechanics   \n",
+       "1    2                     Acceleration = Velocity / time  Mechanics   \n",
+       "2    3                        Force = mass * Acceleration  Mechanics   \n",
+       "3    4                            Weight = mass * Gravety  Mechanics   \n",
+       "4    5                         Momentum = mass * Velocity  Mechanics   \n",
+       "5    6  Centerpetal_acceleration = Velocity**2 / radious   Mechanics   \n",
+       "6    7                        work = Force * Displacement  Mechanics   \n",
+       "7    8            Kinetic_energy = mass * Velocity**2 / 2  Mechanics   \n",
+       "8    9                                Power = work / time  Mechanics   \n",
+       "9   10                            pressure = Force / Area  Mechanics   \n",
+       "10  11                        frequency = c_ / wavelength      Waves   \n",
+       "11  12                       time_perioud = 1 / frequency      Waves   \n",
+       "12  13                   refractive_index = c_ / Velocity      Waves   \n",
+       "13  14                    Electric_field = Force / charge         EM   \n",
+       "14  15  Electric_potential = Electric_field * Displace...         EM   \n",
+       "\n",
+       "    Reference  Note  \n",
+       "0         NaN   NaN  \n",
+       "1         NaN   NaN  \n",
+       "2         NaN   NaN  \n",
+       "3         NaN   NaN  \n",
+       "4         NaN   NaN  \n",
+       "5         NaN   NaN  \n",
+       "6         NaN   NaN  \n",
+       "7         NaN   NaN  \n",
+       "8         NaN   NaN  \n",
+       "9         NaN   NaN  \n",
+       "10        NaN   NaN  \n",
+       "11        NaN   NaN  \n",
+       "12        NaN   NaN  \n",
+       "13        NaN   NaN  \n",
+       "14        NaN   NaN  "
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Example of a formula database\n",
+    "df = pd.read_csv('Example Database.csv')\n",
+    "df"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "phyfos = fl.FormulaSearch(data=df, formula_col='Formula')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[Velocity*time]"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "d = phyfos.find('Displacement','time')\n",
+    "d"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[Velocity*time,\n",
+       " Acceleration*time**2,\n",
+       " time*work/(Velocity*mass),\n",
+       " Power*time/Force]"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "d = phyfos.derive('Displacement','time')\n",
+    "d"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[c/frequency]"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "wl = phyfos.find('wavelength',id=11)\n",
+    "wl"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
