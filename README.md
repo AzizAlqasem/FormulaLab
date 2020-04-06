@@ -46,7 +46,7 @@ $ pip install FormulaLab
 
 ```
 
-## For tutorals and documentations
+## Tutorals and documentations
 visit [FormulaLab](https://azizalqasem.github.io/FormulaLab/)
 
 
