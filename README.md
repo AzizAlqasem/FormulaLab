@@ -70,4 +70,4 @@ Aziz_Alqasem@hotmail.com
 
 
 ### References
-FormulLab is bult upon [SymPy](https://www.sympy.org/en/index.html)
+FormulaLab is bult upon [SymPy](https://www.sympy.org/en/index.html)
