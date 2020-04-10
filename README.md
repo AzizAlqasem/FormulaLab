@@ -66,8 +66,8 @@ visit [FormulaLab](https://azizalqasem.github.io/FormulaLab/)
 
 ### Author
 Abdulaziz Alqasem <br>
-Aziz_Alqasem@hotmail.com
+FormulaLab.py@gmail.com
 
 
-### References
+### Credit
 FormulaLab is bult upon [SymPy](https://www.sympy.org/en/index.html)
