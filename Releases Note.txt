@@ -47,20 +47,19 @@ ____ Future Releases ____
 __ FormulaLab 0.1 __
 
 	__ FormulaLab 0.1.1 __
-
- 
-
-	__ FormulaLab 0.1.0 __ 
-		- Added search test
-		- Added webpage
-        		- Updated Tutorials
-        		- Added code Documentation
-        	- Source code is cleaned 
-        	- Bugs fixes
-		
+	
 
 
 ____ Released ____
+
+  __ FormulaLab 0.1.0 __ (Apr. 5, 2020)
+	- Added test_search
+	- Added webpage
+       		- Updated Tutorials
+        	- Added code Documentation
+       	- Source code is cleaned 
+       	- Bugs fixes
+	
 
   __ FormulaLab 0.0 __
   
@@ -69,7 +68,7 @@ ____ Released ____
         - Some Varibles Names has changed
         - Bugs fixed
 
-  	__ FormulaLab 0.0.3 __  Mar. 16, 2020
+  	__ FormulaLab 0.0.3 __  (Mar. 16, 2020)
 		- This first public release!
 		- The Main feature is FormulaLab.search.FormulaSearch which include:
 			1- get() : Direct search
