@@ -1,40 +1,49 @@
 # FormulaLab
-[FormulaLab](https://azizalqasem.github.io/FormulaLab/) is a package that allows 
-you to **derive** new formulas, **search** in formulas database, and **mange** 
-your formulas database to connect it effeciently to your project code.
+[FormulaLab](https://azizalqasem.github.io/FormulaLab/) is a Python package that mathematically **derives** new formulas, **searches** in formulas, and **connects** your project code to Formulas Database (FD). FD is a smart and efficient way to list, reference, remark, and organize all of your collections of formulas in one place. FD can be connected to as many projects as you want - where editing and inserting is being done only once for all. The formulas in the FD does not have to be rewriten in different forms, one form is enough, and the rest is being derieved by FormulaLab. For example, `Area = Pi * radius^2`, if you ask for the `radius`, FormulaLab will solve it for you - no need for repetition in the FD which is very convienient and time saving when you have many equations.
 
-
+### Best For
+- **Students** who are working with many formulas and trying to derive and connect them to solve 
+  problems and study smartly.
+- **Scientists** and engineers who are working on research that requires a wide range of formulas 
+  to work with, search for, and reference to.
+- **Developers** who want to keep all of their math/physics/... formulas at one place for better 
+  maintenance and debugging.
+ 
 ## Installation
 FormulaLab depends on: 
 * python +3.4
 * Sympy
-* Pandas  
+* Pandas
+* NumPy
 
 To install [FormulaLab](https://azizalqasem.github.io/FormulaLab/):
 ```python
-$ pip install FormulaLab
+pip install FormulaLab
 ```
-
 
 ## Usages
 
 ```python
 >>> import FormulaLab as fl
 
->>> Physics_formulas = ['F = m * a', 'v = a * t']
+>>> Physics_formulas = ['F = m*a', 'v = a*t']
 >>> phy_search = fl.FormulaSearch(data=Physics_formulas)
+>>> phy_search
+   ID  Formula       Args
+0   1  f = m*a  [m, a, f]
+1   2  v = a*t  [a, v, t]
 
-# Now say you want to derive F as a function of t
+# Now, say you want to derive F as a function of t
 >>> Force = phy_search.derive('F', 't')
 >>> Force
 [m*v/t]
 
-# Now you want to convert it to a python function
->>> Force_py = fl.function(Force)
+# Now, you want to convert it to a python function
+>>> Force_py = phy_search.function(Force[0])
 >>> Force_py(m = 2, v = 3, t = 2)
 3.0
 
-# Now you want to find the the value of "t" in a direct search (no subtitution)
+# Now, you want to find the the value of "t" in a direct search (no subtitution)
 >>> phy_search.find('t')
 [v/a]
 
@@ -45,16 +54,20 @@ $ pip install FormulaLab
 >>> phy_search.find('a', ['t','v'])
 [v/t] 
 
+# Now, you want to find `a` from the first equation that has ID=1
+>>> phy_search.find('a',id=1)
+[f/m]
+
 ```
 
-## Tutorals and documentations
+### Tutorals and documentations
 visit [FormulaLab](https://azizalqasem.github.io/FormulaLab/)
 
 
 ### Author
-    Abdulaziz Alqasem
-    Aziz_Alqasem@hotmail.com
+Abdulaziz Alqasem <br>
+FormulaLab.py@gmail.com
 
 
-### References
-FormulLab is bult upon [SymPy](https://www.sympy.org/en/index.html)
+### Credit
+FormulaLab is bult upon [SymPy](https://www.sympy.org/en/index.html)
