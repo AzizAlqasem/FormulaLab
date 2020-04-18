@@ -26,9 +26,8 @@ connect it effeciently to your code.
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
-   :titlesonly:
 
    installation
    Tutorial 1. Quick Introduction
@@ -48,7 +47,7 @@ Indices and tables
 :Author:
     Abdulaziz Alqasem
 :Contact:
-    Aziz_Alqasem@hotmail.com
+    FormulaLab.py@gmail.com
 :Pypi: 
     `Pypi <https://pypi.org/project/FormulaLab/>`_.
 :Source code:

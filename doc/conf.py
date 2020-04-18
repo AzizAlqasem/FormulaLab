@@ -52,7 +52,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '**.ipynb_checkpoints']
 #
 html_theme = 'bizstyle'
 
-html_logo = 'FormulaLabLogoB_small.PNG'
+html_logo = 'FormulaLabLogoG_small.PNG'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
