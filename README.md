@@ -1,7 +1,4 @@
 # FormulaLab
-
-![](/docs/_static/FormulaLabLogoG_small.png)
-
 [FormulaLab](https://azizalqasem.github.io/FormulaLab/) is a Python package that mathematically **derives** new formulas, **searches** in formulas, and **connects** your project code to Formulas Database (FD). FD is a smart and efficient way to list, reference, remark, and organize all of your collections of formulas in one place. FD can be connected to as many projects as you want - where editing and inserting is being done only once for all. The formulas in the FD does not have to be rewriten in different forms, one form is enough, and the rest is being derieved by FormulaLab. For example, `Area = Pi * radius^2`, if you ask for the `radius`, FormulaLab will solve it for you - no need for repetition in the FD which is very convienient and time saving when you have many equations.
 
 ### Best For
