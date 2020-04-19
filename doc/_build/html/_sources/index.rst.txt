@@ -6,8 +6,8 @@
 Welcome to FormulaLab's documentation!
 ======================================
 FormulaLab is a package that allows you to **derive** new formulas,
-**search** in formulas database, and **mange** your formulas database to
-connect it effeciently to your code.
+**search** in formulas database, **manage** and **connect** your database 
+efficiently to your code.
 
 
 
